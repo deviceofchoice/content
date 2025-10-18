@@ -11,8 +11,6 @@ jobs:
         steps:
             - name: Checkout main repo
               uses: actions/checkout@v4
-              with:
-                  token: ${{ secrets.PAT }}
             - name: Clone content repo
               run: |
                   rm -rf src/content
