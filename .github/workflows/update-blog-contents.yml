@@ -2,6 +2,9 @@ name: Update Content on Dispatch
 on:
     repository_dispatch:
         types: [content-update]
+    push:
+        branches:
+            - main
 jobs:
     update:
         runs-on: ubuntu-latest
@@ -13,7 +16,7 @@ jobs:
             - name: Clone content repo
               run: |
                   rm -rf src/content
-                  git clone https://github.com/smaudd/lowtech-blog src/content
+                  git clone https://github.com/deviceofchoice/blog.git src/content
                   rm -rf src/content/.git  # Remove .git to avoid nested repo issues
             - name: Commit and push changes
               run: |
