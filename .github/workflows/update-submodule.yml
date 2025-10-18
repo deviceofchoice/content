@@ -1,0 +1,22 @@
+name: Update Content on Dispatch
+on:
+    repository_dispatch:
+        types: [content-update]
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout main repo
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.PAT }}
+            - name: Clone content repo
+              run: |
+                  rm -rf src/content
+                  git clone https://github.com/smaudd/lowtech-blog src/content
+                  rm -rf src/content/.git  # Remove .git to avoid nested repo issues
+            - name: Commit and push changes
+              run: |
+                  git add src/content
+                  git commit -m "Update content from repo" || echo "No changes"
+                  git push
